@@ -1,15 +1,15 @@
 # Sistema de Ventas en Laravel
 
 ## Panel de Control
-![Panel Principal](assets/images/dashboard.png)
+![Panel Principal](./assets/images/dashboard.png.png)
 
 ## Gestión de Productos
-![Lista de Productos](assets/images/productos_index.png)
-![Crear Producto](assets/images/producto_create.png)
+![Lista de Productos](./assets/images/productos_index.png.png)
+![Crear Producto](./assets/images/producto_create.png.png)
 
 ## Base de Datos
-![Estructura DB](assets/images/phpmyadmin_ventas.png)
-![Importación](assets/images/phpmyadmin_import.png)
+![Estructura DB](./assets/images/phpmyadmin_ventas.png.png)
+![Importación](./assets/images/phpmyadmin_import.png.png)
 
 ## Características Principales
 - Gestionar productos y sus categorías
@@ -29,129 +29,168 @@
 1. PREPARAR LA BASE DE DATOS
    - Abre XAMPP y arranca Apache y MySQL
    - Ve a phpMyAdmin (http://localhost/phpmyadmin)
-   - Crea una base de datos llamada `sistema_ventas` (recomendado)
+   - Crea una base de datos llamada 'ventas'
+   - Puedes importar los datos de ejemplo desde ventas.sql o sistemaventa.sql
 
 2. CONFIGURAR EL PROYECTO
-   - Copia `.env.example` a `.env`
-   - Configura la base de datos en `.env`:
+      - Copia `.env.example` a `.env`
+      - Configura la base de datos en `.env`.
+         Nota importante: en MySQL es recomendable evitar espacios en el nombre de la base de datos. Si tu base de datos actual se llama `sistema ventas`, te sugiero renombrarla a `sistema_ventas` para evitar problemas.
 
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=sistema_ventas
-DB_USERNAME=root
-DB_PASSWORD=
-```
+         Ejemplo (recomendado):
+
+         DB_CONNECTION=mysql
+         DB_HOST=127.0.0.1
+         DB_PORT=3306
+         DB_DATABASE=sistema_ventas
+         DB_USERNAME=root
+         DB_PASSWORD=
+
+         Si realmente necesitas usar un nombre con espacio (no recomendado), algunas herramientas pueden aceptar nombres entre comillas, pero Laravel y el cliente MySQL suelen trabajar mejor con nombres sin espacios. Evita espacios para prevenir errores inesperados.
 
 3. INSTALAR DEPENDENCIAS
-```bash
-composer install
-php artisan key:generate
-npm install && npm run build
-```
+   - Abre una terminal en la carpeta del proyecto
+   - Ejecuta: composer install
+   - Luego: php artisan key:generate
+   - Si vas a modificar estilos: npm install && npm run build
 
 4. CREAR LAS TABLAS
-```bash
-php artisan migrate --force
-php artisan db:seed
-```
+   - Ejecuta: php artisan migrate --force
+   - Si quieres datos de prueba: php artisan db:seed
 
 5. INICIAR EL SISTEMA
-```bash
-php artisan serve
+   - Con Apache: accede a http://localhost/sistema_ventas
+   - O usa: php artisan serve
+   - Abre http://127.0.0.1:8000 en tu navegador
+
+## Estructura de la Base de Datos
+
+### Tablas Principales
+
+#### Categorías
+```sql
+CREATE TABLE categorias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    nombre VARCHAR(50),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
 ```
+
+#### Productos
+```sql
+CREATE TABLE productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT,
+    id_categoria INT,
+    nombre VARCHAR(50),
+    descripcion VARCHAR(50),
+    cantidad INT,
+    precio DECIMAL(10,2),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
+```
+
+CLIENTES
+- id (automático)
+- id_usuario
+- apellido (máx 50)
+- nombre (máx 50)
+- email (máx 50)
+- timestamps
+
+VENTAS
+- id (automático)
+- id_cliente
+- total_venta (decimal)
+- fecha_compra
+- timestamps
+
+DETALLE_VENTAS
+- id (automático)
+- id_venta
+- id_producto
+- cantidad
+- precio_unitario (decimal)
+- sub_total (decimal)
+- timestamps
+
+RUTAS PRINCIPALES
+---------------
+* Autenticación:
+  - / → Página de inicio de sesión
+  - /home → Dashboard principal
+  - /register → Registro de usuarios
+
+* Productos:
+  - /productos → Lista de productos
+  - /productos/create → Crear producto
+  - /productos/{id}/edit → Editar producto
+
+* Ventas:
+  - /ventas → Lista de ventas
+  - /ventas/create → Nueva venta
+  - /ventas/{id} → Detalle de venta
+
+* Clientes:
+  - /clientes → Lista de clientes
+  - /clientes/create → Registrar cliente
+  - /clientes/{id}/edit → Editar cliente
+
+* Categorías:
+  - /categorias → Lista de categorías
+  - /categorias/create → Nueva categoría
 
 ## Estructura del Proyecto
 
 ```
 sistema_ventas/
 ├── app/
-│   ├── Http/Controllers/
-│   └── Models/
+│   ├── Http/Controllers/    # Controladores
+│   └── Models/             # Modelos
 ├── resources/
-│   └── views/
+│   └── views/             # Vistas Blade
 ├── database/
-│   └── migrations/
+│   └── migrations/        # Migraciones
 ├── routes/
-│   └── web.php
-└── public/
+│   └── web.php           # Rutas
+└── public/               # Archivos públicos
 ```
 
-## Conexión a la Base de Datos (breve)
-En `.env` ajusta las variables de conexión como se muestra arriba. No es obligatorio importar un SQL de ejemplo: si ejecutas las migraciones (`php artisan migrate --seed`) el esquema se creará automáticamente.
+## Solución de Problemas
+1. "No se puede conectar a la base de datos"
+   - Revisa que MySQL esté corriendo en XAMPP
+   - Verifica las credenciales en .env
+   - Comprueba que la base 'ventas' existe
 
-## Solución rápida si las imágenes no se ven
-1. Comprueba que los archivos existen en `assets/images` y que sus nombres coinciden exactamente con los usados arriba (por ejemplo `dashboard.png`).
-2. Haz `git add`, `commit` y `push` para subir las imágenes y el `README.md` a GitHub.
-3. En GitHub la página principal del repo muestra `README.md` (no `README.txt`), así que usa `README.md` para que las imágenes se rendericen.
+2. "Error en las migraciones"
+   - Intenta: php artisan migrate:fresh
+   - Nota: esto borrará los datos existentes
 
----
+3. "No se pueden subir productos"
+   - Verifica que existan categorías
+   - Comprueba los permisos del usuario
 
-Si quieres, puedo preparar los comandos exactos para añadir/commitear/pushear los cambios desde PowerShell.
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+MANTENIMIENTO
+------------
+- Haz respaldos regulares de la base de datos
+- Revisa los logs en storage/logs/
+- Mantén actualizado PHP y Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+CONTRIBUIR AL PROYECTO
+--------------------
+1. Haz un fork del repositorio
+2. Crea una rama para tus cambios
+3. Envía un pull request
+4. Describe bien tus cambios
 
-## About Laravel
+¿NECESITAS AYUDA?
+---------------
+- Revisa la documentación de Laravel
+- Verifica los archivos de migración para entender la estructura
+- Consulta el código de los controladores para ver la lógica
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Este sistema está pensado para ser fácil de usar y mantener. Si tienes dudas,
+revisa primero la estructura de la base de datos y los controladores principales.
