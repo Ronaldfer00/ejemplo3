@@ -1,3 +1,94 @@
+# Sistema de Ventas en Laravel
+
+## Panel de Control
+![Panel Principal](assets/images/dashboard.png)
+
+## Gestión de Productos
+![Lista de Productos](assets/images/productos_index.png)
+![Crear Producto](assets/images/producto_create.png)
+
+## Base de Datos
+![Estructura DB](assets/images/phpmyadmin_ventas.png)
+![Importación](assets/images/phpmyadmin_import.png)
+
+## Características Principales
+- Gestionar productos y sus categorías
+- Administrar clientes
+- Registrar ventas y ver su detalle
+- Control de usuarios y accesos
+- Ver reportes en el dashboard
+
+## Requisitos Previos
+
+- XAMPP (Apache y MySQL)
+- PHP 8.x
+- Composer
+- Node.js y npm (opcional, para modificar estilos)
+
+## Instalación
+1. PREPARAR LA BASE DE DATOS
+   - Abre XAMPP y arranca Apache y MySQL
+   - Ve a phpMyAdmin (http://localhost/phpmyadmin)
+   - Crea una base de datos llamada `sistema_ventas` (recomendado)
+
+2. CONFIGURAR EL PROYECTO
+   - Copia `.env.example` a `.env`
+   - Configura la base de datos en `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sistema_ventas
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+3. INSTALAR DEPENDENCIAS
+```bash
+composer install
+php artisan key:generate
+npm install && npm run build
+```
+
+4. CREAR LAS TABLAS
+```bash
+php artisan migrate --force
+php artisan db:seed
+```
+
+5. INICIAR EL SISTEMA
+```bash
+php artisan serve
+```
+
+## Estructura del Proyecto
+
+```
+sistema_ventas/
+├── app/
+│   ├── Http/Controllers/
+│   └── Models/
+├── resources/
+│   └── views/
+├── database/
+│   └── migrations/
+├── routes/
+│   └── web.php
+└── public/
+```
+
+## Conexión a la Base de Datos (breve)
+En `.env` ajusta las variables de conexión como se muestra arriba. No es obligatorio importar un SQL de ejemplo: si ejecutas las migraciones (`php artisan migrate --seed`) el esquema se creará automáticamente.
+
+## Solución rápida si las imágenes no se ven
+1. Comprueba que los archivos existen en `assets/images` y que sus nombres coinciden exactamente con los usados arriba (por ejemplo `dashboard.png`).
+2. Haz `git add`, `commit` y `push` para subir las imágenes y el `README.md` a GitHub.
+3. En GitHub la página principal del repo muestra `README.md` (no `README.txt`), así que usa `README.md` para que las imágenes se rendericen.
+
+---
+
+Si quieres, puedo preparar los comandos exactos para añadir/commitear/pushear los cambios desde PowerShell.
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
