@@ -1,196 +1,99 @@
-# Sistema de Ventas en Laravel
+# ejemplo3
 
-## Panel de Control
-![Panel Principal](./assets/images/dashboard.png.png)
+> esto es un ejemplo de que tenemos que subir un proyecto de tarea
 
-## Gestión de Productos
-![Lista de Productos](./assets/images/productos_index.png.png)
-![Crear Producto](./assets/images/producto_create.png.png)
+## Tabla de contenidos
 
-## Base de Datos
-![Estructura DB](./assets/images/phpmyadmin_ventas.png.png)
-![Importación](./assets/images/phpmyadmin_import.png.png)
+- [Descripción](#descripción)
+- [Características](#características)
+- [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Instalación y uso](#instalación-y-uso)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Imágenes](#imágenes)
+- [Autor](#autor)
 
-## Características Principales
-- Gestionar productos y sus categorías
-- Administrar clientes
-- Registrar ventas y ver su detalle
-- Control de usuarios y accesos
-- Ver reportes en el dashboard
+---
 
-## Requisitos Previos
+## Descripción
 
-- XAMPP (Apache y MySQL)
-- PHP 8.x
-- Composer
-- Node.js y npm (opcional, para modificar estilos)
+Este repositorio contiene un ejemplo de proyecto para subir como tarea. El objetivo es mostrar cómo estructurar y desarrollar una aplicación utilizando **HTML, CSS, Blade, PHP, SCSS y JavaScript**. Puedes utilizar este repositorio como base para tus propias tareas o proyectos académicos.
 
-## Instalación
-1. PREPARAR LA BASE DE DATOS
-   - Abre XAMPP y arranca Apache y MySQL
-   - Ve a phpMyAdmin (http://localhost/phpmyadmin)
-   - Crea una base de datos llamada 'ventas'
-   - Puedes importar los datos de ejemplo desde ventas.sql o sistemaventa.sql
+## Características
 
-2. CONFIGURAR EL PROYECTO
-      - Copia `.env.example` a `.env`
-      - Configura la base de datos en `.env`.
-         Nota importante: en MySQL es recomendable evitar espacios en el nombre de la base de datos. Si tu base de datos actual se llama `sistema ventas`, te sugiero renombrarla a `sistema_ventas` para evitar problemas.
+- Diseño responsivo utilizando tecnologías web modernas.
+- Separación clara entre estructura (HTML/Blade), estilos (CSS/SCSS) y lógica (PHP/JavaScript).
+- Funcionalidad básica implementada en **PHP** y **JavaScript**.
+- Uso de archivos Blade para vistas dinámicas.
+- Estilos personalizados y preprocesados con SCSS.
 
-         Ejemplo (recomendado):
+## Tecnologías utilizadas
 
-         DB_CONNECTION=mysql
-         DB_HOST=127.0.0.1
-         DB_PORT=3306
-         DB_DATABASE=sistema_ventas
-         DB_USERNAME=root
-         DB_PASSWORD=
+- **HTML** (43.3%)
+- **CSS** (26.2%)
+- **Blade** (16.7%)
+- **PHP** (8.8%)
+- **SCSS** (3.2%)
+- **JavaScript** (1.8%)
 
-         Si realmente necesitas usar un nombre con espacio (no recomendado), algunas herramientas pueden aceptar nombres entre comillas, pero Laravel y el cliente MySQL suelen trabajar mejor con nombres sin espacios. Evita espacios para prevenir errores inesperados.
+## Instalación y uso
 
-3. INSTALAR DEPENDENCIAS
-   - Abre una terminal en la carpeta del proyecto
-   - Ejecuta: composer install
-   - Luego: php artisan key:generate
-   - Si vas a modificar estilos: npm install && npm run build
+1. Clona el repositorio:
 
-4. CREAR LAS TABLAS
-   - Ejecuta: php artisan migrate --force
-   - Si quieres datos de prueba: php artisan db:seed
+   ```sh
+   git clone https://github.com/Ronaldfer00/ejemplo3.git
+   cd ejemplo3
+   ```
 
-5. INICIAR EL SISTEMA
-   - Con Apache: accede a http://localhost/sistema_ventas
-   - O usa: php artisan serve
-   - Abre http://127.0.0.1:8000 en tu navegador
+2. Si usas algún framework (por ejemplo, Laravel para Blade y PHP):
 
-## Estructura de la Base de Datos
+   ```sh
+   composer install
+   npm install   # Si hay archivos SCSS para compilar
+   ```
 
-### Tablas Principales
+3. Ejecución del proyecto:
 
-#### Categorías
-```sql
-CREATE TABLE categorias (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    nombre VARCHAR(50),
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
-);
-```
+   - Si es Laravel:  
+     ```sh
+     php artisan serve
+     ```
+   - Si es HTML/PHP básico:  
+     Coloca los archivos en tu servidor local (XAMPP, MAMP, etc) y accede desde el navegador.
 
-#### Productos
-```sql
-CREATE TABLE productos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT,
-    id_categoria INT,
-    nombre VARCHAR(50),
-    descripcion VARCHAR(50),
-    cantidad INT,
-    precio DECIMAL(10,2),
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
-);
-```
-
-CLIENTES
-- id (automático)
-- id_usuario
-- apellido (máx 50)
-- nombre (máx 50)
-- email (máx 50)
-- timestamps
-
-VENTAS
-- id (automático)
-- id_cliente
-- total_venta (decimal)
-- fecha_compra
-- timestamps
-
-DETALLE_VENTAS
-- id (automático)
-- id_venta
-- id_producto
-- cantidad
-- precio_unitario (decimal)
-- sub_total (decimal)
-- timestamps
-
-RUTAS PRINCIPALES
----------------
-* Autenticación:
-  - / → Página de inicio de sesión
-  - /home → Dashboard principal
-  - /register → Registro de usuarios
-
-* Productos:
-  - /productos → Lista de productos
-  - /productos/create → Crear producto
-  - /productos/{id}/edit → Editar producto
-
-* Ventas:
-  - /ventas → Lista de ventas
-  - /ventas/create → Nueva venta
-  - /ventas/{id} → Detalle de venta
-
-* Clientes:
-  - /clientes → Lista de clientes
-  - /clientes/create → Registrar cliente
-  - /clientes/{id}/edit → Editar cliente
-
-* Categorías:
-  - /categorias → Lista de categorías
-  - /categorias/create → Nueva categoría
-
-## Estructura del Proyecto
+## Estructura del proyecto
 
 ```
-sistema_ventas/
-├── app/
-│   ├── Http/Controllers/    # Controladores
-│   └── Models/             # Modelos
+ejemplo3/
+├── images/               # Imágenes utilizadas en el proyecto
+├── public/               # Archivos públicos (index.php, assets, etc)
 ├── resources/
-│   └── views/             # Vistas Blade
-├── database/
-│   └── migrations/        # Migraciones
-├── routes/
-│   └── web.php           # Rutas
-└── public/               # Archivos públicos
+│   ├── views/            # Vistas Blade
+│   └── scss/             # Archivos SCSS
+├── css/                  # Archivos CSS
+├── js/                   # Archivos JavaScript
+├── index.html or index.php   # Página principal
+├── README.md             # Este archivo
 ```
 
-## Solución de Problemas
-1. "No se puede conectar a la base de datos"
-   - Revisa que MySQL esté corriendo en XAMPP
-   - Verifica las credenciales en .env
-   - Comprueba que la base 'ventas' existe
+## Imágenes
 
-2. "Error en las migraciones"
-   - Intenta: php artisan migrate:fresh
-   - Nota: esto borrará los datos existentes
+A continuación, se incluyen ejemplos de imágenes representativas del proyecto:
 
-3. "No se pueden subir productos"
-   - Verifica que existan categorías
-   - Comprueba los permisos del usuario
+### Vista de la página principal
 
-MANTENIMIENTO
-------------
-- Haz respaldos regulares de la base de datos
-- Revisa los logs en storage/logs/
-- Mantén actualizado PHP y Laravel
+![Página principal](images/pagina-principal.png)
 
-CONTRIBUIR AL PROYECTO
---------------------
-1. Haz un fork del repositorio
-2. Crea una rama para tus cambios
-3. Envía un pull request
-4. Describe bien tus cambios
+### Ejemplo de formulario
 
-¿NECESITAS AYUDA?
----------------
-- Revisa la documentación de Laravel
-- Verifica los archivos de migración para entender la estructura
-- Consulta el código de los controladores para ver la lógica
+![Formulario de ejemplo](images/formulario.png)
 
-Este sistema está pensado para ser fácil de usar y mantener. Si tienes dudas,
-revisa primero la estructura de la base de datos y los controladores principales.
+### Diseño responsivo en móvil
+
+![Vista móvil](images/vista-movil.png)
+
+> **Nota:** Coloca tus capturas de pantalla en la carpeta `images/` y actualiza las rutas y nombres de los archivos en el README según corresponda.
+
+## Autor
+
+- **Ronaldfer00**
+- [GitHub](https://github.com/Ronaldfer00)
