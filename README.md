@@ -1,37 +1,197 @@
-# ejemplo3
+# PROYECTO LARAVEL DISEÑO Y PROGRAMACION WEB III
 
-> Proyecto de ejemplo para la entrega de una tarea académica, diseñado para mostrar buenas prácticas en el uso de tecnologías modernas de desarrollo web.
+> Proyecto académico mostrando buenas prácticas con XAMPP, PHP, Visual Studio Code, Composer y conexión a MySQL, corriendo en Laravel.
 
 ---
 
 ## Tabla de Contenidos
 
 - [¿Qué es este proyecto?](#qué-es-este-proyecto)
-- [Objetivos del proyecto](#objetivos-del-proyecto)
+- [Instalación de herramientas](#instalación-de-herramientas)
+  - [XAMPP (Apache + MySQL)](#xampp-apache--mysql)
+  - [PHP](#php)
+  - [Visual Studio Code y extensiones](#visual-studio-code-y-extensiones)
+  - [Composer](#composer)
+- [Configuración del entorno local (XAMPP)](#configuración-del-entorno-local-xampp)
+- [Configurar la conexión a la base de datos](#configurar-la-conexión-a-la-base-de-datos)
+- [Importar la base de datos MySQL](#importar-la-base-de-datos-mysql)
+- [Migraciones en Laravel](#migraciones-en-laravel)
+- [Cómo arrancar el servidor de desarrollo con PHP Artisan](#cómo-arrancar-el-servidor-de-desarrollo-con-php-artisan)
+- [Carpetas y estructura del repositorio](#carpetas-y-estructura-del-repositorio)
 - [Tecnologías y su propósito](#tecnologías-y-su-propósito)
-- [Extensiones recomendadas en VSCode](#extensiones-recomendadas-en-vscode)
-- [Requisitos previos](#requisitos-previos)
-- [Instalación paso a paso](#instalación-paso-a-paso)
-- [Estructura y explicación de carpetas](#estructura-y-explicación-de-carpetas)
-- [Imágenes ilustrativas](#imágenes-ilustrativas)
-- [Preguntas frecuentes (FAQ)](#preguntas-frecuentes-faq)
 - [Autor](#autor)
 - [Licencia](#licencia)
 
 ---
 
-## ¿Qué es este proyecto?
+## ¿Qué es este proyecto?  
 
-Este repositorio contiene una maqueta para la entrega de tareas de programación web. Incluye código fuente y ejemplos que demuestran la integración de diferentes tecnologías y la estructura recomendada en proyectos académicos y prácticos.
+**ejemplo3** es un proyecto de ejemplo desarrollado con el objetivo de mostrar cómo estructurar, documentar y poner en funcionamiento una aplicación web basada en Laravel y MySQL, siguiendo buenas prácticas en un entorno local con XAMPP.  
+Sirve como guía académica para estudiantes o desarrolladores que quieran entender el flujo completo: desde la configuración del servidor y la base de datos, hasta la instalación de dependencias, manejo de migraciones, organización de carpetas y uso de VSCode con extensiones recomendadas. El ejemplo incluye funcionalidades comunes de los sistemas web, como gestión de usuarios, ventas, productos, clientes y categorías.
 
 ---
 
-## Objetivos del proyecto
+## Instalación de herramientas
 
-- **Mostrar la estructura recomendada** para un repositorio de proyecto web.
-- Enseñar **cómo integrar Blade y PHP** para lógica y vistas dinámicas.
-- Ejemplificar la **organización de archivos** para frontend (HTML, CSS, SCSS, JS) y backend (PHP).
-- Ilustrar la **importancia de la documentación** y el uso de imágenes/capturas de pantalla representativas.
+### XAMPP (Apache + MySQL)
+
+- Descarga e instala [XAMPP](https://www.apachefriends.org/es/index.html).
+- Al instalar, accedes al panel de control donde arrancas **Apache** y **MySQL**.
+- El servidor MySQL es el sistema de base de datos usado.
+
+<!-- Imagen descriptiva: Panel de control de XAMPP, donde se inicia Apache y MySQL -->
+![Panel de control de XAMPP. Aquí puedes iniciar los servicios esenciales para tu desarrollo local.](assets/images/xampp.png)
+
+---
+
+### PHP
+
+- Ya está incluido en XAMPP.
+- Para verificar tu versión:
+  ```sh
+  php -v
+  ```
+- Recomiendo usar PHP **8.2+**.
+- Si tienes problemas, instala PHP aparte desde [php.net](https://www.php.net/downloads).
+
+---
+
+### Visual Studio Code y extensiones
+
+- Descarga [VSCode](https://code.visualstudio.com/).
+- Instala extensiones recomendadas para facilitar tu desarrollo.
+
+**Extensiones recomendadas:**
+- Laravel Blade Formatter
+- Laravel Blade Snippets
+- Laravel Snippets
+- Live Server
+- Material Icon Theme
+- Monokai Night Theme
+- PHP Intelephense
+
+<!-- Imagen descriptiva: Extensiones recomendadas en VSCode para desarrollo Laravel/PHP -->
+![Extensiones recomendadas en VSCode. Facilitan el trabajo con Blade, PHP y organización del código.](assets/images/extensiones1.png)
+![Segunda vista de extensiones VSCode. Incluye temas, snippets y live server.](assets/images/extensiones2.png)
+
+---
+
+### Composer
+
+- Descarga desde [getcomposer.org](https://getcomposer.org/download/).
+- Instala y verifica con:
+  ```sh
+  composer -V
+  ```
+- Para instalar dependencias del proyecto, dentro de la carpeta del proyecto ejecuta:
+  ```sh
+  composer install
+  ```
+
+---
+
+## Configuración del entorno local (XAMPP)
+
+1. Ejecuta **XAMPP Control Panel**.
+2. Haz clic en **Start** para los servicios de **Apache** y **MySQL**.
+3. Verifica que ambos estén en verde.
+
+---
+
+## Configurar la conexión a la base de datos
+
+Tu archivo `.env` debe tener la siguiente configuración para que Laravel se conecte a MySQL de XAMPP:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ventas
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+- **DB_HOST**: localhost, es tu propia máquina.
+- **DB_PORT**: puerto 3306 es el estándar de MySQL.
+- **DB_USERNAME**: por defecto en XAMPP es root y sin contraseña.
+
+---
+
+## Importar la base de datos MySQL
+
+Puedes importar usando phpMyAdmin (`http://localhost/phpmyadmin`):
+
+1. Crea una base de datos llamada **ventas**.
+2. Selecciónala y usa la pestaña “Importar”.
+3. Pega el script SQL de tablas y relaciones (incluido en este README).
+4. Haz clic en *Continuar*.
+
+<!-- Imagen descriptiva: Importación del archivo SQL para crear la base de datos 'ventas' -->
+![Pantalla de importación en phpMyAdmin. Así se cargan fácilmente las tablas y datos iniciales.](assets/images/phpmyadmin_import.png)
+
+<!-- Imagen descriptiva: Visualización de la tabla ventas en phpMyAdmin -->
+![Vista de la tabla ventas en phpMyAdmin. Permite monitorear los datos y verificar la integridad de la base.](assets/images/phpmyadmin_ventas.png)
+
+---
+
+
+## Migraciones en Laravel
+
+En **Laravel**, las migraciones son archivos PHP que describen la estructura de tus tablas:
+
+1. Crea nuevas migraciones:
+    ```sh
+    php artisan make:migration create_productos_table
+    ```
+2. Aplica todas las migraciones (crea tablas en la base):
+    ```sh
+    php artisan migrate
+    ```
+
+Las migraciones se encuentran en la carpeta `/database/migrations`.
+
+---
+
+## Cómo arrancar el servidor de desarrollo con PHP Artisan
+
+Para iniciar el servidor de Laravel/Artisan y poder visualizar tu proyecto en el navegador ejecuta:
+
+```sh
+php artisan serve
+```
+- La consola indicará la dirección (por lo general [http://127.0.0.1:8000](http://127.0.0.1:8000)).
+- Accede a esa URL en tu navegador para abrir la aplicación.
+
+<!-- Imagen descriptiva: Pantalla de login en el sistema vía Laravel -->
+![Pantalla de login: el punto de acceso seguro al sistema de ventas.](assets/images/login1.png)
+![Opción alternativa de login. Muestra el formulario para usuarios autenticados.](assets/images/login2.png)
+
+<!-- Imagen descriptiva: Vista principal/dashboard del sistema -->
+![Dashboard del sistema. Muestra las métricas, los módulos de gestión y resumen de usuarios, clientes y ventas.](assets/images/dashboard.png)
+
+<!-- Imagen descriptiva: Formulario de creación de productos -->
+![Formulario de creación de productos. Permite agregar nuevos productos al inventario de la aplicación.](assets/images/producto_create.png)
+
+<!-- Imagen descriptiva: Listado de productos almacenados -->
+![Listado de productos disponibles en el sistema. Visualiza productos, precios y opciones de gestión.](assets/images/productos_index.png)
+
+---
+
+## Carpetas y estructura del repositorio
+
+```
+ejemplo3/
+├── assets/images/
+├── public/
+├── resources/views/
+├── resources/scss/
+├── css/
+├── js/
+├── index.html / index.php
+├── README.md
+├── .env
+├── database.sql
+```
 
 ---
 
@@ -41,134 +201,12 @@ Este proyecto utiliza las siguientes tecnologías (porcentajes aproximados del c
 
 | Tecnología   | Porcentaje | ¿Para qué sirve?                                                         |
 |--------------|------------|--------------------------------------------------------------------------|
-| HTML         | 43.3%      | Estructura básica de las páginas web.                                    |
-| CSS          | 26.2%      | Estilos visuales generales para el sitio.                                |
-| Blade        | 16.7%      | Motor de plantillas de Laravel para crear vistas dinámicas en PHP.        |
-| PHP          | 8.8%       | Lógica de servidor y procesamiento de formularios.                       |
-| SCSS         | 3.2%       | Preprocesador de CSS para organizar y reutilizar estilos.                |
-| JavaScript   | 1.8%       | Funcionalidades interactivas y dinámicas en el navegador.                |
-
----
-
-## Extensiones recomendadas en VSCode
-
-Para mejorar la productividad, organización y experiencia de desarrollo, se recomienda instalar las siguientes extensiones:
-
-<img src="images/img1.png" alt="Extensiones VSCode 1" width="300">
-<img src="images/img2.png" alt="Extensiones VSCode 2" width="300">
-
-#### Explicación de cada extensión:
-
-- **Laravel Blade Formatter:** Da formato automáticamente al código Blade, facilitando su lectura.
-- **Laravel Blade Snippets:** Agrega fragmentos útiles para escribir menos código repetitivo en Blade.
-- **Laravel Snippets:** Fragmentos de Laravel directamente en el editor para facilitar el trabajo.
-- **Live Server:** Permite probar el sitio en tiempo real, refrescando el navegador al guardar cambios.
-- **Material Icon Theme:** Iconos visuales que diferencian tipos de archivos y carpetas.
-- **Monokai Night Theme:** Proporciona un tema oscuro y moderno para cuidar tu vista.
-- **PHP Intelephense:** Autocompletado inteligente, ayuda y referencias rápidas para PHP.
-
----
-
-## Requisitos previos
-
-- Editor recomendado: **VSCode**
-- **PHP** (versión >= 7.4)
-- **Composer** (para dependencias PHP/Laravel)
-- **Node.js y npm** (para compilar SCSS)
-- Servidor local (XAMPP, WAMP, Laragon, MAMP) si es proyecto básico, o **Laravel** si usas Blade.
-
----
-
-## Instalación paso a paso
-
-1. **Clona el repositorio:**
-    ```sh
-    git clone https://github.com/Ronaldfer00/ejemplo3.git
-    cd ejemplo3
-    ```
-
-2. **Instala dependencias:**
-    - Si el proyecto usa Laravel y Blade:
-        ```sh
-        composer install
-        ```
-    - Si el proyecto tiene SCSS:
-        ```sh
-        npm install
-        npm run dev      # Compilar SCSS y obtener los CSS finales
-        ```
-
-3. **Levanta el servidor local:**
-    - Laravel:
-        ```sh
-        php artisan serve
-        ```
-        Ingresa a `http://localhost:8000` en tu navegador.
-    - Proyecto PHP básico:
-        - Copia los archivos a la carpeta `htdocs` de XAMPP/MAMP/etc y accede desde el navegador.
-    - Proyecto solo HTML:
-        - Usa Live Server de VSCode para abrir `index.html` y probar el sitio.
-
----
-
-## Estructura y explicación de carpetas
-
-Así está organizado el proyecto para facilitar el desarrollo y el mantenimiento:
-
-```
-ejemplo3/
-├── assets/
-│   └── images/            # Imágenes del sistema, capturas de pantalla y recursos gráficos
-│       ├── dashboard.png
-│       ├── phpmyadmin_import.png
-│       ├── phpmyadmin_ventas.png
-│       ├── producto_create.png
-│       ├── productos_index.png
-├── public/                # Archivos accesibles por el navegador (index.php, assets, etc)
-├── resources/
-│   ├── views/             # Archivos Blade (.blade.php) para las vistas dinámicas
-│   └── scss/              # Archivos fuente SCSS para los estilos
-├── css/                   # Archivos CSS finales después de compilar los SCSS
-├── js/                    # Archivos JavaScript para funcionalidad dinámica
-├── index.html / index.php # Página principal del proyecto
-├── README.md              # Documentación principal del repositorio
-```
-
----
-
-## Imágenes ilustrativas
-
-Aquí se muestran ejemplos de las diferentes vistas y funcionalidades que el proyecto puede ofrecer:
-
-- **Dashboard principal**
-  ![Dashboard](assets/images/dashboard.png)
-
-- **Importar base de datos en phpMyAdmin**
-  ![Importación en phpMyAdmin](assets/images/phpmyadmin_import.png)
-
-- **Registro de ventas en phpMyAdmin**
-  ![Ventas en phpMyAdmin](assets/images/phpmyadmin_ventas.png)
-
-- **Formulario de creación de producto**
-  ![Crear producto](assets/images/producto_create.png)
-
-- **Listado de productos**
-  ![Listado de productos](assets/images/productos_index.png)
-
-> **Consejo:** Puedes agregar tus propias capturas de pantalla para mostrar el diseño o funcionamiento del sistema que entregas.
-
----
-
-## Preguntas frecuentes (FAQ)
-
-### ¿Puedo usar este repositorio como base para mis tareas?
-¡Por supuesto! Está pensado para ello: adapta o mejora la estructura según los requerimientos de tu docente.
-
-### ¿Cómo saber si tengo todas las dependencias?
-Si te aparece algún error, revisa primero si tienes instalado **PHP**, **Node.js**, **Composer** y las extensiones de VSCode recomendadas.
-
-### ¿Puedo agregar más imágenes?
-Sí. Guarda las capturas en `assets/images/` y agrégalas en el README usando `![texto alternativo](ruta)`.
+| **HTML**     | 43.3%      | Estructura básica de las páginas web.                                   |
+| **CSS**      | 26.2%      | Estilos visuales generales para el sitio.                               |
+| **Blade**    | 16.7%      | Motor de plantillas de Laravel para crear vistas dinámicas en PHP.       |
+| **PHP**      | 8.8%       | Lógica de servidor y procesamiento de formularios.                      |
+| **SCSS**     | 3.2%       | Preprocesador de CSS para organizar y reutilizar estilos.               |
+| **JavaScript**| 1.8%      | Funcionalidades interactivas y dinámicas en el navegador.               |
 
 ---
 
@@ -181,4 +219,4 @@ GitHub: [Ronaldfer00](https://github.com/Ronaldfer00)
 
 ## Licencia
 
-Uso libre y académico. Puedes modificar y reutilizar este material para tus tareas.
+Uso educativo y libre.
