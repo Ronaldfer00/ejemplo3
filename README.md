@@ -133,8 +133,19 @@ Puedes importar usando phpMyAdmin (`http://localhost/phpmyadmin`):
 ![Vista de la tabla ventas en phpMyAdmin. Permite monitorear los datos y verificar la integridad de la base.](assets/images/phpmyadmin_ventas.png)
 
 ---
+📦 Base de datos del proyecto (ventas.sql)
+
+Para ejecutar correctamente el sistema en tu entorno local, necesitas importar la base de datos que contiene la estructura y los datos de ejemplo del proyecto.
+
+🔽 Descargar archivo SQL
+
+Puedes descargar el archivo directamente desde este repositorio:
+👉 [Descargar `ventas.sql`]([https://github.com/TUUSUARIO/TUREPOSITORIO/raw/main/ventas.sql](https://raw.githubusercontent.com/Ronaldfer00/ejemplo3/refs/heads/main/ventas.sql))
 
 
+Este archivo incluye todas las tablas, relaciones y algunos registros de ejemplo (usuarios, productos, clientes y categorías) necesarios para que el sistema funcione de inmediato.
+
+---
 ## Migraciones en Laravel
 
 En **Laravel**, las migraciones son archivos PHP que describen la estructura de tus tablas:
