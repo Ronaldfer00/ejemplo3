@@ -140,7 +140,8 @@ Para ejecutar correctamente el sistema en tu entorno local, necesitas importar l
 🔽 Descargar archivo SQL
 
 Puedes descargar el archivo directamente desde este repositorio:
-👉 [Descargar `ventas.sql`]([https://github.com/TUUSUARIO/TUREPOSITORIO/raw/main/ventas.sql](https://raw.githubusercontent.com/Ronaldfer00/ejemplo3/refs/heads/main/ventas.sql))
+👉 [Descargar `ventas.sql`](https://raw.githubusercontent.com/Ronaldfer00/ejemplo3/main/ventas.sql)
+
 
 
 Este archivo incluye todas las tablas, relaciones y algunos registros de ejemplo (usuarios, productos, clientes y categorías) necesarios para que el sistema funcione de inmediato.
